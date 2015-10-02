@@ -8,9 +8,9 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-###The data that we are going to present is called "Florida State Public Departments Employee Salaries in Recent two years".
+#The data that we are going to present is called "Florida State Public Departments Employee Salaries in Recent two years".
 
-###This is Summary and Subset of the data
+#This is Summary and Subset of the data
 
 ```{r}
 require("jsonlite")
@@ -27,33 +27,33 @@ head(df)
 ```
 
 
-###Below here are 3 data wrangling sets that we found very interesting  
-###Data Wrangling 1
+#Below here are 3 data wrangling sets that we found very interesting  
+##Data Wrangling 1
 ```{r}
 df %>% select(CURRENT_ANNUAL_SALARY, DEPARTMENT, POSITION_TITLE) %>% filter(CURRENT_ANNUAL_SALARY >= 80000, DEPARTMENT %in% c("POL", "DOT", "DTS", "HHS", "FRS")) %>% ggplot(aes(x = POSITION_TITLE, y = CURRENT_ANNUAL_SALARY, color = DEPARTMENT)) + geom_point()
 ```
-###Observations: 
-#1. Even for a single position within a department say FRS (Florida Retirement System), employees' salaries vary. The range is up to (160K - 80K = 80K).
-#2. The department that has most employees is the HHS (Department of Health and Human Services); the department that has the least employees is the DTS (Diplomatic Telecommunications Service)
-#3. The higest salary which is near 240K lies in the POL department (Police) and only four employees have salaries over 200K; the majority of the employees' salaries lie between 80K and 120K
+##Observations: 
+###1. Even for a single position within a department say FRS (Florida Retirement System), employees' salaries vary. The range is up to (160K - 80K = 80K).
+###2. The department that has most employees is the HHS (Department of Health and Human Services); the department that has the least employees is the DTS (Diplomatic Telecommunications Service)
+###3. The higest salary which is near 240K lies in the POL department (Police) and only four employees have salaries over 200K; the majority of the employees' salaries lie between 80K and 120K
 
 
-###Data Wrangling 2
+##Data Wrangling 2
 ```{r}
 df %>% select(CURRENT_ANNUAL_SALARY, DEPARTMENT, GENDER) %>% group_by(GENDER) %>% filter(DEPARTMENT %in% c("POL","HHS")) %>% ggplot(aes(x = DEPARTMENT, y = CURRENT_ANNUAL_SALARY, color = GENDER)) + geom_point()
 ```
-###Observations:
-#1. This time we only focus on two departments HHS and POL (Health and Human Services & Police department), and we want to have a sense of the gender distribution within these two departments.
-#2. Clearly within HHS, the female male ratio is big with a female employee having the highest salary and a male employee having the lowest salary; however, in the police department, the female male ratio is small with a male employee having the highest salary and a female employee having the lowest salary.
-#3. Altogether, there are more employees in HHS than in POL; the ranges of both departments are close around (225K - 23K = 202K)
-#4. These observations are intuitive.
+##Observations:
+###1. This time we only focus on two departments HHS and POL (Health and Human Services & Police department), and we want to have a sense of the gender distribution within these two departments.
+###2. Clearly within HHS, the female male ratio is big with a female employee having the highest salary and a male employee having the lowest salary; however, in the police department, the female male ratio is small with a male employee having the highest salary and a female employee having the lowest salary.
+###3. Altogether, there are more employees in HHS than in POL; the ranges of both departments are close around (225K - 23K = 202K)
+###4. These observations are intuitive.
 
 
-###Data Wrangling 3
+##Data Wrangling 3
 ```{r}
 df %>% select(X2014_OVERTIME_PAY, DEPARTMENT, GENDER) %>% filter(X2014_OVERTIME_PAY >= 10, DEPARTMENT %in% c("POL", "DOT", "DTS", "HHS", "FRS")) %>% group_by(GENDER) %>% ggplot(aes(x = DEPARTMENT, y = X2014_OVERTIME_PAY, color = GENDER)) + geom_point()
 ```
-###Observations:
-#1. First, this time we focus on 2014 OVERTIME PAY (additional financial compensation for any hours worked over the amount of 40 hours per week). Secondly, before I visualize the data, I exclude those employess whose over time pay is null. There are two reasons for null: one is that some of the employees have not had overtime working hours, and the other is that some employees indeed worked overtime during 2014 but did not get compensation. 
-#2. We can clearly see that, the department that had the most employees worked overtime is the FRS (Florida Retirement System); within FRS, there were only few female employees who worked overtime and the majority is male. The department that had the least employees worked overtime is the DTS (Department of Technology Services); within the departmentt, only one female employee had worked overtime. The department that has the most female employees worked overtime is HHS, which is reasonable as we have seen before that this department has the most female employees among all 5 public departments
-#3. The highest overtime pay is up to 100K and it lies in the FRS, and the lowest is down to almost 0.
+##Observations:
+###1. First, this time we focus on 2014 OVERTIME PAY (additional financial compensation for any hours worked over the amount of 40 hours per week). Secondly, before I visualize the data, I exclude those employess whose over time pay is null. There are two reasons for null: one is that some of the employees have not had overtime working hours, and the other is that some employees indeed worked overtime during 2014 but did not get compensation. 
+###2. We can clearly see that, the department that had the most employees worked overtime is the FRS (Florida Retirement System); within FRS, there were only few female employees who worked overtime and the majority is male. The department that had the least employees worked overtime is the DTS (Department of Technology Services); within the departmentt, only one female employee had worked overtime. The department that has the most female employees worked overtime is HHS, which is reasonable as we have seen before that this department has the most female employees among all 5 public departments
+###3. The highest overtime pay is up to 100K and it lies in the FRS, and the lowest is down to almost 0.
